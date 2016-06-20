@@ -1,11 +1,5 @@
-# uberfire-docs
+Starting from version 0.9.x the code was moved directly into uberfire repository (https://github.com/uberfire/uberfire/uberfire-docs)
+=======================================================================================================================
 
-## How to edit the docs
+Older branches (e.g. 0.8.x and 0.7.x) are still kept in this repository.
 
-- Fork the repository https://github.com/uberfire/uberfire-docs then clone the fork locally
-- Get gitbook editor from https://github.com/GitbookIO/editor-legacy
-- Get gitbook builder from https://github.com/GitbookIO/gitbook (you may need to install npm first)
-- Edit the docs in your forked repository uberfire-docs/docs in gitbook editor
-- When you've finished editing, build the docs by running uberfire-docs/buildHtml.sh and uberfire-docs/buildPdf.sh
-- View the built docs in uberfire-docs/docs/_book/index.html and uberfire-docs/uberfire-docs.pdf
-- Submit a pull request to get your changes accepted
