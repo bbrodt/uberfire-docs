@@ -1,4 +1,3 @@
-
 #UF Tasks
 In order to understand how Uberfire works, let's create a simple task manager that will look like this:
 
