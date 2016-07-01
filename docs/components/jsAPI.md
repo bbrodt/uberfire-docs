@@ -147,7 +147,7 @@ Each plugin also has an html template:
 ```
 File: angular.sample.html
 <div ng-controller="TodoCtrl">
-    <span>{{remaining()}} of {{todos.length}} remaining</span>
+    <span>{remaining()} of {todos.length} remaining</span>
     [ <a href="" ng-click="archive()">archive</a> ]
     <ul class="unstyled">
         <li ng-repeat="todo in todos">

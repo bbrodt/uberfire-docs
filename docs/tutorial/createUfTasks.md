@@ -1,10 +1,11 @@
 #Creating UF Tasks Project
 
-Your UF Tasks project will follow the standard Maven project layout. So let's create it using our archetype.
+Our UF Tasks project will follow the standard Maven project layout, so let's create it using our archetype.
 
 ## Cloning Uberfire
 
-First, let's clone the Uberfire repository, so we have the most recent archetype available. Go to your preferred directory and run one of the following commands:
+First, let's clone the Uberfire repository, so we have the most recent archetype available.
+From the command line, go into your preferred git directory and run one of the following commands:
 
 HTTPS mode:
 ```
@@ -28,7 +29,7 @@ This will create the archetype and store it in your ~/.m2 directory.
 
 ## Creating UF Tasks Project
 
- In a command line, go to your preferred directory and run this command to create your first app:
+ In a command line, go into your git directory and run this command to create your first app:
 
 ```
 $ mvn archetype:generate -B \
@@ -65,17 +66,18 @@ You should see the maven build success message again.
 
 ## See it work!
 
-How about running our project?
+To run the application, enter the following:
+
 ```
 $ cd uftasks-showcase/uftasks-webapp
 $ mvn clean gwt:run
 ```
-Wait for GWT console to build your app:
+
+Wait for the GWT console to build your app:
 
 ![gwt build](gwt-console.png)
 
-Click on "Launch Default Browser" to open your Uberfire App. Log in with the username "admin" and the password "admin". You should see our Hello World screen!
+Click on "Launch Default Browser" to open your Uberfire app. Log in with the username "admin" and the password "admin". After GWT has compiled your application, you should see the "Hello World" screen:
 
 ![app start](appStart.png)
 
-When you see that, you are good to go.
