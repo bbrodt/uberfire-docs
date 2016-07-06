@@ -38,9 +38,6 @@ The Uberfire Archetype contains some useful code samples that are not necessary 
 - HelloWorldScreen.java
 - HelloWorldScreen.ui.xml
 - MainPerspective.java
-- MyModel.java
-- MyService.java
-- MyServiceImpl.java
 
 ##Creating the Project Structure
 

@@ -1,6 +1,6 @@
 #Layout of Uberfire Archetype
 
-Our UF Tasks project follows the standard Maven project layout. Most open source Java projects use this same layout, so it should look familiar.
+Our UFTasks project follows the standard Maven project layout. Most open source Java projects use this same layout, so it should look familiar.
 
 Here’s a rundown of the specific files and directories you’ll find in every Uberfire project generated from Uberfire Archetype. Don’t get hung up on the details yet. We’ll get to each of these in turn.
 

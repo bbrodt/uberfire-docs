@@ -27,9 +27,9 @@ _UFTasksShowcase.gwt.xml_
 </module>
 ```
 
-This file lives in the "org.uberfire" package in your src/main/resources project folder and defines a GWT "module". The <source path='client'> and <source path='shared'> elements declare that all the classes in the org.uberfire.client and org.uberfire.shared packages and their sub-packages are GWT-managed. Everything else (e.g. the stuff in the org.uberfire.backend package) is server-side.
+This file lives in the "org.uberfire" package in your src/main/resources project folder and defines a GWT "module". The &lt;source path='client'&gt; and &lt;source path='shared'&gt; elements declare that all the classes in the org.uberfire.client and org.uberfire.shared packages and their sub-packages are GWT-managed. Everything else (e.g. the stuff in the org.uberfire.backend package) is server-side.
 
-The <inherits> elements define the dependencies required by this module. Java source code for these dependencies must be available to the GWT compiler, and must have their own *.gwt.xml resources, i.e. they must also be GWT modules. For example, if you're using the eclipse IDE to build your Uberfire project, you can see these in the "Maven Dependencies" library:
+The &lt;inherits&gt; elements define the dependencies required by this module. Java source code for these dependencies must be available to the GWT compiler, and must have their own *.gwt.xml resources, i.e. they must also be GWT modules. For example, if you're using the eclipse IDE to build your Uberfire project, you can see these in the "Maven Dependencies" library:
 
 ![GWT Dependencies](eclipse-uberfire-gwt-dependencies.png)
 
@@ -103,7 +103,7 @@ public class AppSetup {
     @PostConstruct
     public void init() {
         try {
-            ioService.newFileSystem( URI.create("default://uftasks"),  new HashMap<String, Object>() {{}} );
+            ioService.newFileSystem( URI.create("default://uftasks"),  new HashMap<String, Object>() {} );
              
         } catch ( final FileSystemAlreadyExistsException ignore ) {
  
@@ -185,19 +185,19 @@ private void writeFile(String fileURI, final String content) {
 
 By default, the VFS root is in a directory called ".niogit" and is created in the directory from which the web server is started, i.e. whatever the "current directory" is when you run the server startup script.
 
-Assume that we have installed a wildfly server instance in C:/JBoss/wildfly. The server startup scripts are in the "bin" directory, so if we start wildfly from a shell ("command line") like so:
+Assume that we have installed a wildfly server instance in /usr/share/wildfly. The server startup scripts are in the "bin" directory, so if we start wildfly from a shell ("command line") like so:
 
 ```
-$ cd C:/JBoss/wildfly
+$ cd /usr/share/wildfly
 $ bin/standalone.sh
 ```
 
-the VFS root will be in C:/JBoss/wildfly/.niogit and our GIT VFS directory will be C:/JBoss/wildfly/.niogit/uftasks.git. The name of the GIT repository comes from the URI provided to the **ioService.newFileSystem()** call in **AppSetup**.
+the VFS root will be in /usr/share/wildfly/.niogit and our GIT VFS directory will be /usr/share/wildfly/.niogit/uftasks.git. The name of the GIT repository comes from the URI provided to the **ioService.newFileSystem()** call in **AppSetup**.
 
 Note that this GIT directory is in a "detached head" state. To actually see the files in the working tree we can simply clone the repository, like so:
 
 ```
-$ cd C:/JBoss/wildfly/.niogit
+$ cd /usr/share/wildfly/.niogit
 $ git clone uftasks.git
 Cloning into 'uftasks'...
 done.
@@ -209,7 +209,7 @@ This will clone uftasks.git into the directory uftasks, which can then be treate
 
 Sometimes it's useful to change the VFS root so that it points to some other directory, or some other drive. This can be done by setting a system property in the server's configuration. See [App Server Configuration](https://docs.jboss.org/jbpm/v6.0/userguide/wb.Workbench.html#wb.systemProperties) for more information about how this is done. Essentially, it involves editing an app server configuration file and setting the server property "org.uberfire.nio.git.dir" to point to VFS root.
 
-During development/testing you can also change the VFS root by adding a Java VM argument to the maven pom. Locate the pom.xml file in the uftasks-webapp project and add the following to the <extraJvmArgs> element:
+During development/testing you can also change the VFS root by adding a Java VM argument to the maven pom. Locate the pom.xml file in the uftasks-webapp project and add the following to the &lt;extraJvmArgs&gt; element:
 
 ```
 <build>
@@ -219,8 +219,8 @@ During development/testing you can also change the VFS root by adding a Java VM 
       <groupId>org.codehaus.mojo</groupId>
       <artifactId>gwt-maven-plugin</artifactId>
       <configuration>
-        <extraJvmArgs>-Dorg.uberfire.nio.git.dir=C:/temp -Xmx1536m -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home}</extraJvmArgs>
+        <extraJvmArgs>-Dorg.uberfire.nio.git.dir=/var/tmp -Xmx1536m -XX:CompileThreshold=7000 -Derrai.jboss.home=${errai.jboss.home}</extraJvmArgs>
 
 ```
 
-This will relocate the VFS root to C:/temp/.niogit.
+This will relocate the VFS root to /var/tmp/.niogit.

@@ -1,4 +1,4 @@
-#5 minutes Introduction
+#5 Minute Introduction
 This session teaches you how to build your first Uberfire App in just 5 minutes.
 
 ## Prerequisites

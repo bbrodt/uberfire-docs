@@ -17,7 +17,7 @@ This means we will have to move our model files (_TasksRoot.java_, _Project.java
 
 ![Restructured Project](restructuring.png)
 
-The uftasks-component-api project now contains our model files; this project is a dependency of the iftasks-webapp project (the client-side code) so these classes can still be resolved in our client-side code. Our new UFTasksService implementation code will be "hidden" in the uftasks-component-backen project. Now let's get started...
+The uftasks-component-api project now contains our model files; this project is a dependency of the uftasks-webapp project (the client-side code) so these classes can still be resolved in our client-side code. Our new UFTasksService implementation code will be "hidden" in the uftasks-component-backen project. Now let's get started...
 
 ###Service Interface
 
@@ -35,7 +35,7 @@ public interface UFTasksService {
 }
 ```
 
-Here we have defined two methods, load and save - their purpose should be obious. Note that since this service will be passing a TasksRoot model object back and forth, the TasksRoot class must be annotated with @Portable (see below).
+Here we have defined two methods, load and save - their purpose should be obious. Note that since this service will be passing a TasksRoot model object back and forth, the TasksRoot class must be annotated with **@Portable** (see below).
 
 ###Service Implementation
 
@@ -87,7 +87,7 @@ public class UFTasksServiceImpl implements UFTasksService {
 }
 ```
 
-Notice here that since this service is being executed on the server side, the **VFSService** is a "peer" and can be called directly instead of having to use a **Callback**. Recall that, on the client side the client had to invoke **VFSService** asynchronously because information was sent over the wire from client to server and then back to client.
+Since this service is being executed on the server side, the **VFSService** is a "peer" and can be called directly instead of having to use a **Callback**. Recall that, on the client side the client had to invoke **VFSService** asynchronously because information was sent over the wire from client to server and then back to client.
 
 ###Model Object Changes
 
@@ -110,14 +110,14 @@ public class Task extends TreeNode<Folder, TreeNode> {
 }
 ```
 
-Notice the **@MapsTo** annotation in the constructor. This tells Erray that this parameterized constructor accepts the initial value for the **name** attribute.
+Notice the **@MapsTo** annotation in the constructor. This tells Errai that this parameterized constructor accepts the initial value for the **name** attribute.
 
 Errai uses Java reflection to traverse the object's class definition. This means that any class fields that are not primitive types, or simple java List types must also be annotated as **@Portable**. 
 Although we don't show these changes here, all of our other model objects, **TreeNode**, **TasksRoot**, **Project**, **Folder** and **Task**, will require the **@Portable** annotation as well.
 
 ###Client-side Changes
 
-Now that we have our UFTasks service, we can use it on the client-side. Recall that the **ProjectsPresenter** was the "owner" of the **TasksRoot* object - our model root. The reason for doing this, and sending all model changes to this class should now become clear: whenever a model change occurs, **ProjectsPresenter** will be responsible for serializing those changes using our **UFTasksService**.
+Now that we have our UFTasks service, we can use it on the client-side. Recall that the **ProjectsPresenter** was the "owner" of the **TasksRoot** object - our model root. The reason for doing this, and sending all model changes to this class should now become clear: whenever a model change occurs, **ProjectsPresenter** will be responsible for serializing those changes using our **UFTasksService**.
 
 Here is the new version of this class:
 
@@ -305,14 +305,15 @@ After rebuilding and running the application, create some Projects, Folders and 
 {
     "^EncodedType": "org.uberfire.component.model.TasksRoot",
     "^ObjectID": "1",
-    "projects": {
+    "parent": null,
+    "children": {
         "^EncodedType": "java.util.ArrayList",
         "^ObjectID": "2",
         "^Value": [
             {
                 "^EncodedType": "org.uberfire.component.model.Project",
                 "^ObjectID": "3",
-                "name": "p1",
+                "name": "House Chores",
                 "selected": true,
                 "parent": null,
                 "children": {
@@ -322,7 +323,7 @@ After rebuilding and running the application, create some Projects, Folders and 
                         {
                             "^EncodedType": "org.uberfire.component.model.Folder",
                             "^ObjectID": "5",
-                            "name": "f1",
+                            "name": "Honey-do list",
                             "parent": {
                                 "^EncodedType": "org.uberfire.component.model.Project",
                                 "^ObjectID": "3"
@@ -334,8 +335,15 @@ After rebuilding and running the application, create some Projects, Folders and 
                                     {
                                         "^EncodedType": "org.uberfire.component.model.Task",
                                         "^ObjectID": "7",
-                                        "name": "t1",
+                                        "name": "Fix the leaky gutters",
                                         "done": false,
+                                        "priority": 0,
+                                        "dueDate": {
+                                            "^EncodedType": "java.util.Date",
+                                            "^ObjectID": "-1125032746",
+                                            "^Value": "1467753782659"
+                                        },
+                                        "id": "1467753782659",
                                         "parent": {
                                             "^EncodedType": "org.uberfire.component.model.Folder",
                                             "^ObjectID": "5"
@@ -343,6 +351,50 @@ After rebuilding and running the application, create some Projects, Folders and 
                                         "children": {
                                             "^EncodedType": "java.util.ArrayList",
                                             "^ObjectID": "8",
+                                            "^Value": []
+                                        }
+                                    },
+                                    {
+                                        "^EncodedType": "org.uberfire.component.model.Task",
+                                        "^ObjectID": "9",
+                                        "name": "Walk the dog",
+                                        "done": false,
+                                        "priority": 0,
+                                        "dueDate": {
+                                            "^EncodedType": "java.util.Date",
+                                            "^ObjectID": "-1125027343",
+                                            "^Value": "1467753787556"
+                                        },
+                                        "id": "1467753787556",
+                                        "parent": {
+                                            "^EncodedType": "org.uberfire.component.model.Folder",
+                                            "^ObjectID": "5"
+                                        },
+                                        "children": {
+                                            "^EncodedType": "java.util.ArrayList",
+                                            "^ObjectID": "10",
+                                            "^Value": []
+                                        }
+                                    },
+                                    {
+                                        "^EncodedType": "org.uberfire.component.model.Task",
+                                        "^ObjectID": "11",
+                                        "name": "Mow the lawn",
+                                        "done": true,
+                                        "priority": 0,
+                                        "dueDate": {
+                                            "^EncodedType": "java.util.Date",
+                                            "^ObjectID": "-1125021191",
+                                            "^Value": "1467753793708"
+                                        },
+                                        "id": "1467753793708",
+                                        "parent": {
+                                            "^EncodedType": "org.uberfire.component.model.Folder",
+                                            "^ObjectID": "5"
+                                        },
+                                        "children": {
+                                            "^EncodedType": "java.util.ArrayList",
+                                            "^ObjectID": "12",
                                             "^Value": []
                                         }
                                     }
@@ -355,6 +407,7 @@ After rebuilding and running the application, create some Projects, Folders and 
         ]
     }
 }
+
 ```
 
 Notice that Errai inserts a bunch of metadata into the JSON. This is required so that the marshaller knows exactly how to reconstruct the model when parsing this JSON.

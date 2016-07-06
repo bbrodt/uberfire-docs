@@ -149,12 +149,12 @@ import org.gwtbootstrap3.client.ui.constants.IconType;
     private ListGroupItem generateTask(Task task) {
         TaskItem taskItem = new TaskItem(task);
         taskItem.add(createTaskCheckbox(task));
-        taskItem.add(createTaskNotesButton(task));
+        taskItem.add(editTaskButton(task));
 
         return taskItem;
     }
 	
-    private Button createTaskNotesButton(Task task) {
+    private Button editTaskButton(Task task) {
         Button button = GWT.create(Button.class);
         button.setIcon(IconType.EDIT);
         button.setMarginLeft(20.0);
@@ -188,6 +188,20 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 [...]
     
+    public static class DueDateValueChangeHandler implements ValueChangeHandler<Date> {
+        private final Label text;
+
+        public DueDateValueChangeHandler(Label text) {
+            this.text = text;
+        }
+
+        public void onValueChange(ValueChangeEvent<Date> event) {
+            Date date = event.getValue();
+            String dateString = DateTimeFormat.getFormat(PredefinedFormat.DATE_MEDIUM).format(date);
+            text.setText(dateString);
+        }
+    }
+
     RichTextArea notesTextArea;
    
     ListBox priorityListBox;
@@ -211,7 +225,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
     Label dueDateLabel;
 
     @Override
-    public void init( TaskEditorPresenter presenter ) {
+    public void init( NewTaskPresenter presenter ) {
         this.presenter = presenter;
 
         this.modal = new Modal();
@@ -220,10 +234,15 @@ import com.google.gwt.user.datepicker.client.DatePicker;
         modal.add( body );
         
         // add the other widgets
-        notesTextArea = new RichTextArea(); 
-        notesTextArea.setHeight("200");
-        notesTextArea.setWidth("100%");
-        taskNotesAnchor.add(notesTextArea);
+        this.presenter = presenter;
+        
+        nameTextBox = new TextBox();
+        nameTextBox.setWidth("90%");
+        taskNameAnchor.add(nameTextBox);
+        
+        doneCheckBox = new CheckBox();
+        doneCheckBox.setText("Done");
+        taskDoneAnchor.add(doneCheckBox);
         
         priorityListBox = new ListBox();
         priorityListBox.setMultipleSelect(false);
@@ -245,7 +264,8 @@ import com.google.gwt.user.datepicker.client.DatePicker;
     @Override
     public void show(Task task) {
 		this.task = task;
-        notesTextArea.setHTML(task.getNotes());
+        nameTextBox.setText(task.getName());
+        doneCheckBox.setValue(task.isDone());
         for (int index=0; index<priorityListBox.getItemCount(); ++index) {
             int v = Integer.parseInt(priorityListBox.getValue(index));
             if (v == task.getPriority()) {
@@ -258,6 +278,8 @@ import com.google.gwt.user.datepicker.client.DatePicker;
         modal.show();
     }
 ```
+
+Note the inner class **DueDateValueChangeHandler** is a value change listener that simply updates the Due Date label when the user selects a new date from the DatePicker widget.
 
 _NewTaskView.html_
 ```
@@ -305,7 +327,7 @@ public class TaskChangedEvent {
 }
 ```
 
-Then change the "OK" button click handler to fire the event:
+Then change the "OK" button click handler to fetch the new values from the widgets, stuff them into a **Task** object and fire the event with the changes:
 
 _NewTaskView.java_
 ```
@@ -318,6 +340,10 @@ import org.uberfire.shared.events.TaskChangedEvent;
 
     @EventHandler("ok-button")
     public void onOk( ClickEvent event ) {
+        task.setName(nameTextBox.getText());
+        task.setDone(doneCheckBox.getValue());
+        task.setPriority(Integer.parseInt(priorityListBox.getSelectedValue()));
+        task.setDueDate(dueDatePicker.getValue());
 		taskChangedEvent.fire(new TaskChangedEvent(this.task));
         presenter.close();
     }
@@ -345,3 +371,5 @@ import org.uberfire.shared.events.TaskChangedEvent;
 ###Time to see it work!
 
 Rebuild the application and run it; you should see this when you click on the Edit button in the Task list:
+
+![New Task Dialog](NewTaskDialog.png)

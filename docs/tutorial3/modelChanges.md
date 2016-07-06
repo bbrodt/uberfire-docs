@@ -63,6 +63,23 @@ public class Task extends TreeNode<Folder, TreeNode> {
         return id;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Task) {
+            Task that = (Task)obj;
+            if (!this.getName().equals(that.getName()))
+                return false;
+            if (this.isDone() != that.isDone())
+                return false;
+            if (this.getPriority() != that.getPriority())
+                return false;
+            if (!this.getDueDate().equals(that.getDueDate()))
+                return false;
+            return true;
+        }
+        return super.equals(obj);
+    }
+
     public void set(Task that) {
         this.name = that.name;
         this.done = that.done;

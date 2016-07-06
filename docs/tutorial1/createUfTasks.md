@@ -1,6 +1,6 @@
-#Creating UF Tasks Project
+#Creating the UFTasks Project
 
-Our UF Tasks project will follow the standard Maven project layout, so let's create it using our archetype.
+Our UFTasks project will follow the standard Maven project layout, so let's create it using our archetype.
 
 ## Cloning Uberfire
 
@@ -27,7 +27,7 @@ $ mvn clean install -DskipTests=true -Dgwt.compiler.skip=true
 ```
 This will create the archetype and store it in your ~/.m2 directory.
 
-## Creating UF Tasks Project
+## Creating the UFTasks Project
 
  In a command line, go into your git directory and run this command to create your first app:
 
